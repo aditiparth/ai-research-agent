@@ -1,46 +1,75 @@
 # Autonomous AI Research Agent
 
-An AI-powered research assistant built with **LangChain**, **Anthropic Claude**, and custom tools. The agent searches the web, queries Wikipedia, and outputs structured research data while saving results locally.
+An AI-powered research assistant built with **LangChain** and **Anthropic Claude**. The agent autonomously searches the web and Wikipedia, generates structured research results, and saves them locally.
 
 ## Features
 
-- **Web & Wiki Search:** Uses DuckDuckGo and Wikipedia tools to gather research data.
-- **Structured Output:** Enforces strict Pydantic parsing (`ResearchResponse`) for topic, summary, sources, and tools used.
-- **File Exporter:** Includes a custom tool to log research results into a local text file.
+- Web search using DuckDuckGo
+- Wikipedia research
+- Autonomous tool selection with LangChain
+- Structured output using Pydantic
+- Saves research results to local files
+
+## Tech Stack
+
+**Python · LangChain · Claude 3.5 Sonnet · Pydantic · DuckDuckGo · Wikipedia**
 
 ## Project Structure
-├── main.py           # Core agent logic and setup
-├── tools.py          # Search, Wikipedia, and file saving tools
-├── requirements.txt   # Python dependencies
-└── README.md         # Project documentation
 
-## Setup & Installation
-1. Clone the RepositoryBashgit clone 
-2. Set Up Virtual EnvironmentBash# On macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
+```text
+AI-Agent/
+├── main.py
+├── tools.py
+├── requirements.txt
+├── .env
+└── README.md
+```
 
-# On Windows
+## Setup
+
+```bash
+git clone https://github.com/aditiparth/ai-research-agent.git
+cd AI-Agent
+
 python -m venv venv
-venv\Scripts\activate
-3. Install DependenciesBashpip install -r requirements.txt
-4. Configure Environment VariablesCreate a .env file in the root directory and add your API keys:   Code snippet
-ANTHROPIC_API_KEY="your_anthropic_api_key_here"
-# OPENAI_API_KEY="your_openai_api_key_here" # Optional if switching to ChatOpenAI
+venv\Scripts\activate        # Windows
 
-## UsageRun the agent from your terminal:Bashpython main.py
-Enter your research query when prompted.   The agent will analyze the request, run required tools (web search, Wikipedia)[cite: 1], and structure the final answer[cite: 1].Output is printed to the console as a structured object and saved locally[cite: 1, 3].
+python -m pip install -r requirements.txt
+```
 
-## Technical OverviewLLM: 
-Anthropic Claude 3.5 Sonnet (claude-3-5-sonnet-20241022) via langchain-anthropic[cite: 1].
-Parser Schema:
-class ResearchResponse(BaseModel):
-    topic: str
-    summary: str
-    source: list[str]
-    tools_used: list[str]
+Create a `.env` file:
 
-Tools:
-DuckDuckGoSearchRun: Performs real-time web queries.   
-WikipediaQueryRun: Retrieves concise Wikipedia topic summaries.   
-save_text_to_file: Custom file I/O tool with timestamping.
+```env
+ANTHROPIC_API_KEY="your_api_key_here"
+```
+
+Run the agent:
+
+```bash
+python main.py
+```
+
+Enter a research question when prompted. The agent will select the appropriate tools, gather information, generate a structured response, and save the results locally.
+
+## Example
+
+```text
+Input:
+What are the applications of AI in healthcare?
+
+Output:
+ResearchResponse(
+    topic="AI in Healthcare",
+    summary="...",
+    source=[...],
+    tools_used=[...]
+)
+```
+
+## Future Improvements
+
+- Add more research sources
+- Generate PDF/Markdown reports
+- Add conversational memory
+- Build a web interface
+- Add source verification
